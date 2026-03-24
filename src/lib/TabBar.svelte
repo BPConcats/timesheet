@@ -11,6 +11,12 @@
         <button class="btn">Reports</button>
     </div>
     <div>
+        <!-- <button on:click={()=>{
+            localStorage.clear();
+            window.location.reload();
+        }} style="background-color: var(--green);">
+            Clear Storage
+        </button> -->
         <button on:click={openTimer} style="background-color: var(--green);">
             <i class="fa-solid fa-play" style="margin-right: 5px;"></i>
             Start

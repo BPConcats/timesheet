@@ -117,3 +117,19 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
+
+select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+}
+
+textarea {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  font-size: small;
+  flex: 1;
+}

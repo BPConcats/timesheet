@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
+const { exec } = require('child_process');
 
 let win;
 let timerWindow;
@@ -17,26 +18,49 @@ function createWindow() {
     }
   });
 
-  win.loadURL('http://localhost:5173'); // Vite dev server
+  const devServerUrl = 'http://localhost:5173';
+
+  const loadWithRetry = () => {
+    win.loadURL(devServerUrl).catch(() => {
+      // Catching the error here prevents the app from crashing on the first fail
+    });
+  };
+
+  win.webContents.on('did-fail-load', () => {
+    console.log("Server not ready, retrying in 1s...");
+    setTimeout(loadWithRetry, 1000);
+  });
+
+  loadWithRetry();
 
   win.on('closed', () => {
     win = null;
   });
 }
 
+
+function getWindowDisplay(targetWin) {
+  if (!targetWin || targetWin.isDestroyed()) return screen.getPrimaryDisplay();
+  const winBounds = targetWin.getBounds();
+  return screen.getDisplayMatching(winBounds);
+}
+
 function createBottomLeftWindow() {
   if(!timerWindow) {
-    const display = screen.getPrimaryDisplay();
-    const { width: screenWidth, height: screenHeight } = display.workArea;
+    const display = screen.getDisplayMatching(win.getBounds());
+    const { x: displayX, y: displayY, width, height } = display.workArea;
 
     const winWidth = 320;
     const winHeight = 50;
 
+    const targetX = displayX;
+    const targetY = displayY + height;
+
     timerWindow = new BrowserWindow({
       width: winWidth,
       height: winHeight,
-      x: 0,
-      y: screenHeight,
+      x: targetX,
+      y: targetY,
       frame: false,
       alwaysOnTop: true,
       resizable: true,
@@ -65,14 +89,41 @@ ipcMain.on('timer-close', () => {
   timerWindow = null;
 });
 
+ipcMain.on('timer-stop', () => {
+  timerWindow.setSize(320, 320, true);
+});
+
+ipcMain.on('timer-resume', () => {
+  const display = screen.getDisplayMatching(win.getBounds());
+  const { x: displayX, y: displayY, width, height } = display.workArea;
+
+  const winWidth = 320;
+  const winHeight = 50;
+
+  const targetX = displayX;
+  const targetY = displayY + height;
+  timerWindow.setBounds({ x: targetX, y: targetY, width: winWidth, height: winHeight });
+});
+
 ipcMain.on('app-close', () => {
   BrowserWindow.getAllWindows().forEach(win => win.close());
   app.quit();
+  if (process.platform === 'win32') {
+    exec('taskkill /f /im node.exe'); 
+  } else {
+    exec('pkill -f vite');
+  }
 });
 
 ipcMain.on('start-activity', (event, args) => {
   if (win) {
     win.webContents.send('start-activity', args);
+  }
+});
+
+ipcMain.on('save-close', (event, args) => {
+  if (win) {
+    win.webContents.send('save-close', args);
   }
 });
 
