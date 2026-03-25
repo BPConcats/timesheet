@@ -8,7 +8,7 @@
     import ActivityItem from './lib/ActivityItem.svelte';
     import { parse } from 'svelte/compiler';
 
-    let dir = window.location.pathname;
+    let dir = window.location.hash;
 
     let allActivities = [];
     let todaysActivities = [];
@@ -35,7 +35,7 @@
     }
 </script>
 
-{#if dir == '/timer'}
+{#if dir == '#timer'}
   <Timer/>
 {:else}
   <Toolbar/>
@@ -67,7 +67,7 @@
         <p class="title">BILL PERC.</p>
         <i class="statsIcon fa-solid fa-percent" style="border: 1px solid var(--orange); color: var(--orange); background-color: var(--faded-orange);"></i>
       </div>
-      <h4>{parseInt((billableTime / totalTime) * 100)}%</h4>
+      <h4>{totalTime == 0 ? 0 : parseInt((billableTime / totalTime) * 100)}%</h4>
     </div>
   </section>
 

@@ -6,7 +6,7 @@
     let paused = false;
     let killed = false;
 
-    let type = "Billable";
+    let type = "billable";
     let description = "";
 
     onMount(() => {

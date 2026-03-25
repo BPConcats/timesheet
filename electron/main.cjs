@@ -18,7 +18,13 @@ function createWindow() {
     }
   });
 
-  const devServerUrl = 'http://localhost:5173';
+  // Use this for production builds
+  win.loadFile(path.join(__dirname, '../dist/index.html'));
+
+  // Uncomment this section of code to use for development.
+  // Run 'npm run start' to start both the Svelte server and the
+  // election application.
+  /*const devServerUrl = 'http://localhost:5173';
 
   const loadWithRetry = () => {
     win.loadURL(devServerUrl).catch(() => {
@@ -31,7 +37,7 @@ function createWindow() {
     setTimeout(loadWithRetry, 1000);
   });
 
-  loadWithRetry();
+  loadWithRetry();*/
 
   win.on('closed', () => {
     win = null;
@@ -60,7 +66,7 @@ function createBottomLeftWindow() {
       width: winWidth,
       height: winHeight,
       x: targetX,
-      y: targetY,
+      y: targetY - winHeight,
       frame: false,
       alwaysOnTop: true,
       resizable: true,
@@ -70,7 +76,17 @@ function createBottomLeftWindow() {
       }
     });
 
-    timerWindow.loadURL('http://localhost:5173/timer');
+    // Uncomment this line for local development
+    // timerWindow.loadURL('http://localhost:5173');
+
+    // Use this for production builds
+    timerWindow.loadFile(path.join(__dirname, '../dist/index.html'), {
+      hash: 'timer'
+    });
+
+    timerWindow.on('closed', () => {
+      timerWindow = null;
+    });
   }
 }
 

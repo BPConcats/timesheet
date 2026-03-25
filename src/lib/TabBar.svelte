@@ -7,8 +7,8 @@
 <section class="row" style="justify-content: space-between;">
     <div class="row" style="gap: 5px;">
         <button class="btn selected">Today</button>
-        <button class="btn">History</button>
-        <button class="btn">Reports</button>
+        <!-- <button class="btn">History</button> -->
+        <!-- <button class="btn">Reports</button> -->
     </div>
     <div>
         <!-- <button on:click={()=>{
