@@ -59,12 +59,15 @@
             </div>
         </div>
     {:else}
-        <div class="row" style="justify-content: space-between;">
-            <h2>{formatSeconds(timeOnTask)}</h2>
-            <div class="row">
-                <i on:click={paused = !paused} class="fa-solid {paused ? "fa-play" : "fa-pause"}" style="padding: 8px; border: 1px solid var(--orange); color: var(--orange); background-color: var(--faded-orange); border-radius: 8px; font-size: small;"></i>
-                <i on:click={stopTimer} class="fa-solid fa-square" style="padding: 8px; border: 1px solid var(--red); color: var(--red); background-color: var(--faded-red); border-radius: 8px; font-size: small;"></i>
+        <div class="col" style="flex: 1; margin: 20px 10px; gap: 8px;">
+            <div class="row" style="justify-content: space-between;">
+                <h2>{formatSeconds(timeOnTask)}</h2>
+                <div class="row">
+                    <i on:click={paused = !paused} class="fa-solid {paused ? "fa-play" : "fa-pause"}" style="padding: 8px; border: 1px solid var(--orange); color: var(--orange); background-color: var(--faded-orange); border-radius: 8px; font-size: small;"></i>
+                    <i on:click={stopTimer} class="fa-solid fa-square" style="padding: 8px; border: 1px solid var(--red); color: var(--red); background-color: var(--faded-red); border-radius: 8px; font-size: small;"></i>
+                </div>
             </div>
+            <textarea bind:value={description} placeholder="What are you working on?" />
         </div>
     {/if}
 </section>
