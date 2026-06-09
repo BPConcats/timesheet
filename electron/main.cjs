@@ -50,7 +50,7 @@ function createBottomLeftWindow() {
     const { x: displayX, y: displayY, width, height } = display.workArea;
 
     const winWidth = 320;
-    const winHeight = 50;
+    const winHeight = 160;
 
     const targetX = displayX;
     const targetY = displayY + height;
@@ -99,7 +99,7 @@ ipcMain.on('timer-close', () => {
 });
 
 ipcMain.on('timer-stop', () => {
-  timerWindow.setSize(320, 320, true);
+  timerWindow.setSize(320, 380, true);
 });
 
 ipcMain.on('timer-resume', () => {
@@ -107,7 +107,7 @@ ipcMain.on('timer-resume', () => {
   const { x: displayX, y: displayY, width, height } = display.workArea;
 
   const winWidth = 320;
-  const winHeight = 50;
+  const winHeight = 160;
 
   const targetX = displayX;
   const targetY = displayY + height;
