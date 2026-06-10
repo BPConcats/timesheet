@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { formatSeconds } from "../common";
+    import { getSetting } from "../stores/settingsStore";
 
     let timeOnTask = 0;
     let paused = false;
@@ -67,7 +68,9 @@
                     <i on:click={stopTimer} class="fa-solid fa-square" style="padding: 8px; border: 1px solid var(--red); color: var(--red); background-color: var(--faded-red); border-radius: 8px; font-size: small;"></i>
                 </div>
             </div>
-            <textarea bind:value={description} placeholder="What are you working on?" />
+            {#if getSetting('timer_description')}
+                <textarea bind:value={description} placeholder="What are you working on?" />
+            {/if}
         </div>
     {/if}
 </section>

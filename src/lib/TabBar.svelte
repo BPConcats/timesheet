@@ -1,8 +1,9 @@
 <script>
     import { localDir, setLocalDir } from "../stores/routeStore";
+    import { getSetting } from "../stores/settingsStore";
 
     function openTimer() {
-        window.electronAPI.openBottomLeftWindow();
+        window.electronAPI.openBottomLeftWindow(getSetting('timer_description'));
     }
 </script>
 

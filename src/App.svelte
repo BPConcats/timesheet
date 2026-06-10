@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import TabBar from './lib/TabBar.svelte';
     import Timer from './lib/Timer.svelte';
     import Toolbar from './lib/Toolbar.svelte';
@@ -7,6 +8,7 @@
     import Settings from './pages/Settings.svelte';
     import Today from './pages/Today.svelte';
     import { localDir } from './stores/routeStore';
+    import { getSetting } from './stores/settingsStore';
 
     let dir = window.location.hash;
 </script>

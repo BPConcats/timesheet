@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  openBottomLeftWindow: () => ipcRenderer.send('open-bottom-left-window'),
+  openBottomLeftWindow: (timerDescription) => ipcRenderer.send('open-bottom-left-window', timerDescription),
   minimizeWindow: () => ipcRenderer.send('window-minimize'),
   closeTimer: () => ipcRenderer.send('timer-close'),
   resumeTimer: () => ipcRenderer.send('timer-resume'),

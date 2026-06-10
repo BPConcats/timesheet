@@ -44,13 +44,13 @@ function createWindow() {
   });
 }
 
-function createBottomLeftWindow() {
+function createBottomLeftWindow(showDesctiption) {
   if(!timerWindow) {
     const display = screen.getDisplayMatching(win.getBounds());
     const { x: displayX, y: displayY, width, height } = display.workArea;
 
     const winWidth = 320;
-    const winHeight = 160;
+    const winHeight = showDesctiption ? 160 : 50;
 
     const targetX = displayX;
     const targetY = displayY + height;
@@ -83,8 +83,8 @@ function createBottomLeftWindow() {
   }
 }
 
-ipcMain.on('open-bottom-left-window', () => {
-  createBottomLeftWindow();
+ipcMain.on('open-bottom-left-window', (channel, showDesctiption) => {
+  createBottomLeftWindow(showDesctiption);
 });
 
 ipcMain.on('window-minimize', () => {
